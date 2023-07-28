@@ -185,7 +185,7 @@ plugin.mapping = function()
     mappings.register({
         mode = "n",
         key = { "<leader>", "f", "f" },
-        action = "<cmd>lua require('telescope.builtin').find_files()<cr>",
+        action = "<cmd>lua require('telescope.builtin').find_files({cwd = global_root_path})<cr>",
         short_desc = "Find files",
         silent = true,
     })
@@ -216,8 +216,16 @@ plugin.mapping = function()
     mappings.register({
         mode = "n",
         key = { "<leader>", "f", "q" },
-        action = "<cmd>lua require('telescope.builtin').live_grep()<cr>",
+        action = "<cmd>lua require('telescope.builtin').live_grep({cwd = global_root_path})<cr>",
         short_desc = "Find Query",
+        silent = true
+    })
+
+    mappings.register({
+        mode = "n",
+        key = { "<leader>", "f", "g" },
+        action = "<cmd>lua require('telescope.builtin').grep_string({cwd = global_root_path})<cr>",
+        short_desc = "Find Current World",
         silent = true
     })
 

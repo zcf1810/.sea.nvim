@@ -7,7 +7,7 @@ else
     vim.g.HOME_PATH = " "
     return
 end
-vim.g.CONFIG = vim.g.HOME_PATH .. "/.sea.nvim"
+vim.g.CONFIG = vim.g.HOME_PATH .. "/.config/nvim"
 vim.o.runtimepath = vim.o.runtimepath .. "," .. vim.g.CONFIG
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"

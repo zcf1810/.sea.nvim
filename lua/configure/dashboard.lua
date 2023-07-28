@@ -17,7 +17,8 @@ plugin.core = {
                   winbar = true,       -- hide winbar
               },
               preview = {
-                  command = "cat | lolcat -F 0.3",
+                  command = "cat ",
+                  -- command = "cat | lolcat -F 0.3",
                   file_path =  vim.g.CONFIG..'/lua/util/neovim.txt',  -- preview file path
                   file_height = 15,   -- preview file height
                   file_width = 70,   -- preview file width

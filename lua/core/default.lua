@@ -11,6 +11,7 @@ vim.cmd("let mapleader=';'")
 vim.cmd("nnoremap - ;")
 vim.cmd("vnoremap - ;")
 local global_func = require('util.global')
+global_root_path = vim.loop.cwd()
 
 
 -- special setting
@@ -123,7 +124,7 @@ default_setting['opt'] = {
     history = 10000, -- undo file history
     updatetime = 30, -- CursorHold
     undofile = true, -- use undo file
-    swapfile = true, -- use swap file
+    swapfile = false, -- use swap file
     maxmempattern = 2000, -- max match pattern
     autochdir = true, -- auto change directory to current file
     lazyredraw = true, -- true will speed up in macro repeat

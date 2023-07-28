@@ -78,7 +78,7 @@ if vim.g.feature_groups['enhance'] == true then
         ['ipython'] = { enabled = true },
         ['jukit'] = { enabled = true }, --for jupyter
         ['neogen'] = { enabled = false }, -- generate annotations
-        ['terminal'] = { enabled = true },
+        -- ['terminal'] = { enabled = true },
         ['remote'] = { enabled = true },
         ['high_str'] = { enabled = false },
         ['colorizer'] = { enabled = true },

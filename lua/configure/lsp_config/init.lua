@@ -99,8 +99,10 @@ plugin.core = {
                 single_file_support = true
 
             },
-            -- sqlls = {
-            -- },
+            --bash = {
+            --    filetypes = { 'sh' },
+            --    cmd = { 'bash-language-server', 'start' }
+            --},
             clangd = {
                 capabilities = {offsetEncoding = { "utf-16" }},
                 cmd = { "clangd" },

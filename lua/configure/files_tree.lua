@@ -71,7 +71,7 @@ plugin.core = {
                 -- width of the window, can be either a number (columns) or a string in `%`
                 width = "20%",
                 -- side of the tree, can be one of 'left' | 'right' | 'top' | 'bottom'
-                side = 'right',
+                side = 'left',
                 signcolumn = "yes",
                 mappings = {
                     -- custom only false will merge the list with the default mappings

@@ -141,8 +141,8 @@ if vim.g.feature_groups['lsp'] then
         ["lsp_signature"] = { enabled = vim.g.feature_groups.lsp == 'builtin' },
         ["null_ls"] = { enabled =  vim.g.feature_groups.lsp == 'builtin' },
         ["nvim_cmp"] = { enabled = vim.g.feature_groups.lsp == 'builtin' },
-        ["copilot"] = { enabled = vim.g.feature_groups.lsp == 'builtin' },
-        ["copilot_cmp"] = { enabled = vim.g.feature_groups.lsp == 'builtin' },
+        --["copilot"] = { enabled = vim.g.feature_groups.lsp == 'builtin' },
+        --["copilot_cmp"] = { enabled = vim.g.feature_groups.lsp == 'builtin' },
         ["lsp_status"] = { enabled = vim.g.feature_groups.lsp == 'builtin' },
         --['lsp_icon'] = { enabled = vim.g.feature_groups.lsp == 'builtin' }, -- directly setting in nvim_cmp
         --['fold_expr'] = { enabled = vim.g.feature_groups.lsp == 'builtin' }, -- may cause slow

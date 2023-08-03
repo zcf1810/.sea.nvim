@@ -126,6 +126,18 @@ plugin.core = {
                     end,
                     { "i", "s", --[[ "c" (to enable the mapping in command mode) ]] }
                 ),
+                ["<TAB>"] = cmp.mapping(
+                    function(fallback)
+                        cmp_ultisnips_mappings.jump_forwards(fallback)
+                    end,
+                    { "i", "s", --[[ "c" (to enable the mapping in command mode) ]] }
+                ),
+                ["<S-TAB>"] = cmp.mapping(
+                    function(fallback)
+                        cmp_ultisnips_mappings.jump_backwards(fallback)
+                    end,
+                    { "i", "s", --[[ "c" (to enable the mapping in command mode) ]] }
+                ),
                 ["<C-k>"] = cmp.mapping(
                     function(fallback)
                         cmp_ultisnips_mappings.jump_backwards(fallback)
@@ -239,7 +251,6 @@ plugin.core = {
                 { name = 'cmdline_history' },
             })
         })
-
         -- Setup lspconfig.
         local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
         capabilities.textDocument.completion.completionItem.snippetSupport = true

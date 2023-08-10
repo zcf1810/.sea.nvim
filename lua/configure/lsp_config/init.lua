@@ -48,6 +48,8 @@ plugin.core = {
             grammarly = {
                 filetypes = { 'markdown', 'vimwiki', 'vimwiki.markdown.pandoc', 'pandoc' },
             },
+            bashls = {
+            },
             pyright = {
                 root_dir = function(fname)
                     local split_path = {}

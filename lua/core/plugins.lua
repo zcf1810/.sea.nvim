@@ -90,6 +90,7 @@ if vim.g.feature_groups['enhance'] == true then
         ["accelerate_jk"] = { enabled = false },
         ["scroll"] = { enabled = true },
         ["animate"] = { enabled = false },  -- TODO: interesting
+        ["vim-illuminate"] = { enabled = true },
     }
 end
 

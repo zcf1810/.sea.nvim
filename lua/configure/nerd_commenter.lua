@@ -27,7 +27,7 @@ plugin.mapping = function()
     local mappings = require('core.mapping')
     mappings.register({
         mode = { "n", "v" },
-        key = { "<leader>", "c", "c" },
+        key = { "<leader>", "c", "C" },
         action = "<Plug>NERDCommenterAlignBoth",
         short_desc = "Comment",
         silent = true,
@@ -51,6 +51,13 @@ plugin.mapping = function()
         key = { "<leader>", "c", "u" },
         action = "<Plug>NERDCommenterUncomment",
         short_desc = "UnComment",
+        silent = true,
+    })
+    mappings.register({
+        mode = { "n", "v" },
+        key = { "<leader>", "c", "c" },
+        action = "<Plug>NERDCommenterToggle",
+        short_desc = "Comment Toggle",
         silent = true,
     })
 end

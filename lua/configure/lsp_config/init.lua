@@ -50,6 +50,8 @@ plugin.core = {
             },
             bashls = {
             },
+            cmake = {
+            },
             pyright = {
                 root_dir = function(fname)
                     local split_path = {}
@@ -107,7 +109,7 @@ plugin.core = {
             --},
             clangd = {
                 capabilities = {offsetEncoding = { "utf-16" }},
-                cmd = { "clangd" },
+                cmd = { "/usr/bin/clangd" },
                 filetypes = { "c", "cpp", "objc", "objcpp" },
                 root_dir = util.root_pattern(
                 '.clangd',

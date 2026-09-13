@@ -123,6 +123,13 @@ plugin.core = {
             },
             ts_ls = {}, -- 原名 tsserver，lspconfig 0.2.1 起改名 ts_ls（用旧名会报 deprecated 警告）
         }
+        -- grammarly 只在设了 GRAMMARLY_PATH（Grammarly 桌面端路径）时才启用：
+        -- 没设时走的是 npm 版 grammarly-languageserver，它在 Node 20 下会直接崩
+        -- （web-tree-sitter 把本地文件路径当 URL fetch → ERR_INVALID_URL），
+        -- 打开 markdown 就会报 "Client grammarly quit with exit code 1"
+        if os.getenv("GRAMMARLY_PATH") == nil then
+            servers["grammarly"] = nil
+        end
         mason_lspconfig.setup({
             ensure_installed = vim.tbl_keys(servers),
         })

@@ -15,6 +15,11 @@ plugin.core = {
         require("nvim-treesitter.install").prefer_git = true
         local rainbow = require("ts-rainbow")
         require("nvim-treesitter.configs").setup({
+            -- parser 放到 ~/.local/share/nvim/site（nvim 默认 runtimepath 就含这个目录）。
+            -- 否则 parser 只躺在 lazy 插件目录里，而插件是 VeryLazy 才加载的：启动时
+            -- `nvim foo.lua` 会先跑内置 ftplugin/lua.lua → 找不到 parser →
+            -- 报 "no parser for 'lua' language"。
+            parser_install_dir = vim.fn.stdpath("data") .. "/site",
             rainbow = { -- for rainbow pair
                 enable = false,
                 disable = {}, -- disable filetype

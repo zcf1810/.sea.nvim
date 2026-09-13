@@ -38,90 +38,90 @@ plugin.core = {
             },
         })
         local servers = {
-            --bashls = {
-            --    cmd = { "bash-language-server", "start" },
-            --    filetypes = { "sh" },
-            --    single_file_support = true,
-            --},
-            --lua_ls = {
-            --    settings = {
-            --        Lua = {
-            --            diagnostics = {
-            --                globals = { "vim" },
-            --            },
-            --            workspace = { checkThirdParty = false },
-            --            telemetry = { enable = false },
-            --        },
-            --    },
-            --    filetypes = { "lua" },
-            --},
-            --jsonls = {},
-            --grammarly = {
-            --    filetypes = { "markdown", "vimwiki", "vimwiki.markdown.pandoc", "pandoc" },
-            --},
-            --pyright = {
-            --    root_dir = function(fname)
-            --        local split_path = {}
-            --        local path = Path:new(fname)
-            --        local lib_flag = false
-            --        for _, value in pairs(path:_split()) do
-            --            if value == "lib" then
-            --                lib_flag = true
-            --            end
-            --            if value ~= nil and value ~= "" and lib_flag then
-            --                table.insert(split_path, value)
-            --            end
-            --        end
-            --        if
-            --            #split_path >= 4
-            --            and string.find(split_path[2], "python") ~= nil
-            --            and split_path[3] == "site-packages"
-            --        then
-            --            for _ = 1, #split_path - 4, 1 do
-            --                path = path:parent()
-            --            end
-            --            return path.filename
-            --        end
-            --        local root =
-            --            util.root_pattern(".git", "setup.py", "setup.cfg", "pyproject.toml", "requirements.txt")(fname) -- or util.path.dirname(fname)
-            --        if root == vim.g.HOME_PATH or root == nil then
-            --            return nil
-            --        end
-            --        return root
-            --    end,
-            --    cmd = { "pyright-langserver", "--stdio" },
-            --    filetypes = { "python" },
-            --    flags = {
-            --        debounce_text_changes = 150,
-            --    },
-            --    settings = {
-            --        python = {
-            --            analysis = {
-            --                autoImportCompletions = true,
-            --                autoSearchPaths = true,
-            --                diagnosticMode = "openFilesOnly", -- or "workspace"
-            --                stubPath = "typings", --or ""
-            --                typeshedPaths = {},
-            --                useLibraryCodeForTypes = true,
-            --            },
-            --            linting = {
-            --                enabled = false,
-            --            },
-            --            pythonPath = global_fun.which_python(),
-            --            --venvPath = "/home/sun/anaconda3/envs/dlkit",
-            --        },
-            --    },
-            --    single_file_support = true,
-            --},
-            ----sqlls = {
-            ----    cmd = { "sql-language-server", "up", "--method", "stdio" },
-            ----    filetypes = { "sql", "mysql" },
-            ----    single_file_support = true,
-            ----},
-            --clangd = {
-            --    capabilities = { offsetEncoding = { "utf-16" } },
-            --},
-            --tsserver = {},
+            bashls = {
+                cmd = { "bash-language-server", "start" },
+                filetypes = { "sh" },
+                single_file_support = true,
+            },
+            lua_ls = {
+                settings = {
+                    Lua = {
+                        diagnostics = {
+                            globals = { "vim" },
+                        },
+                        workspace = { checkThirdParty = false },
+                        telemetry = { enable = false },
+                    },
+                },
+                filetypes = { "lua" },
+            },
+            jsonls = {},
+            grammarly = {
+                filetypes = { "markdown", "vimwiki", "vimwiki.markdown.pandoc", "pandoc" },
+            },
+            pyright = {
+                root_dir = function(fname)
+                    local split_path = {}
+                    local path = Path:new(fname)
+                    local lib_flag = false
+                    for _, value in pairs(path:_split()) do
+                        if value == "lib" then
+                            lib_flag = true
+                        end
+                        if value ~= nil and value ~= "" and lib_flag then
+                            table.insert(split_path, value)
+                        end
+                    end
+                    if
+                        #split_path >= 4
+                        and string.find(split_path[2], "python") ~= nil
+                        and split_path[3] == "site-packages"
+                    then
+                        for _ = 1, #split_path - 4, 1 do
+                            path = path:parent()
+                        end
+                        return path.filename
+                    end
+                    local root =
+                        util.root_pattern(".git", "setup.py", "setup.cfg", "pyproject.toml", "requirements.txt")(fname) -- or util.path.dirname(fname)
+                    if root == vim.g.HOME_PATH or root == nil then
+                        return nil
+                    end
+                    return root
+                end,
+                cmd = { "pyright-langserver", "--stdio" },
+                filetypes = { "python" },
+                flags = {
+                    debounce_text_changes = 150,
+                },
+                settings = {
+                    python = {
+                        analysis = {
+                            autoImportCompletions = true,
+                            autoSearchPaths = true,
+                            diagnosticMode = "openFilesOnly", -- or "workspace"
+                            stubPath = "typings", --or ""
+                            typeshedPaths = {},
+                            useLibraryCodeForTypes = true,
+                        },
+                        linting = {
+                            enabled = false,
+                        },
+                        pythonPath = global_fun.which_python(),
+                        --venvPath = "/home/sun/anaconda3/envs/dlkit",
+                    },
+                },
+                single_file_support = true,
+            },
+            sqlls = {
+                cmd = { "sql-language-server", "up", "--method", "stdio" },
+                filetypes = { "sql", "mysql" },
+                single_file_support = true,
+            },
+            clangd = {
+                capabilities = { offsetEncoding = { "utf-16" } },
+            },
+            tsserver = {},
         }
         mason_lspconfig.setup({
             ensure_installed = vim.tbl_keys(servers),

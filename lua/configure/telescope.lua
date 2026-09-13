@@ -230,6 +230,30 @@ plugin.mapping = function()
         silent = true,
     })
 
+    -- ;fg：搜索光标下的单词（精确到词，rg -w）；可视模式下搜选中的内容
+    function _G._telescope_grep_cword()
+        if vim.fn.mode():match("[vV\22]") then
+            require("telescope.builtin").grep_string()
+            return
+        end
+        local word = vim.fn.expand("<cword>")
+        if word == "" then
+            vim.notify("光标下没有单词", vim.log.levels.WARN, { title = "Grep" })
+            return
+        end
+        -- word_match = "-w" 必须显式给：只要传了 search，telescope 就不再加 -w，
+        -- 否则搜 greeting 会把 greetings 也算进来
+        require("telescope.builtin").grep_string({ search = word, word_match = "-w" })
+    end
+
+    mappings.register({
+        mode = { "n", "x" },
+        key = { "<leader>", "f", "g" },
+        action = "<cmd>lua _G._telescope_grep_cword()<cr>",
+        short_desc = "Grep Word Under Cursor",
+        silent = true,
+    })
+
     mappings.register({
         mode = "n",
         key = { "<leader>", "f", "l" },

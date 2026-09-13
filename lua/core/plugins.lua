@@ -43,7 +43,7 @@ if vim.g.feature_groups["org_my_life"] == true then
         ["markdown"] = { enabled = true },
         ["vimtex"] = { enabled = true },
         ["obsidian"] = { enabled = true },
-        ["obsidian_bridge"] = { enabled = true },
+        ["obsidian_bridge"] = { enabled = false }, -- 已关：需要 Obsidian 里装 Local REST API 插件+key，否则打开 md 会报 OBSIDIAN_REST_API_KEY 未设置
         ["glow"] = { enabled = true }, -- preview markdown in terminal
         ["markdown_code_edit"] = { enabled = true },
         ["markdown_preview"] = { enabled = true },

@@ -69,7 +69,7 @@ end
 
 if vim.g.feature_groups["enhance"] == true then
     plugins_configure.plugins_groups["enhance"] = {
-        ["chatgpt"] = { enabled = true },
+        ["chatgpt"] = { enabled = false }, -- 已关：国内连不上 OpenAI API，AI 功能走 claude_code（;aC）
         ["claude_code"] = { enabled = true }, -- Claude Code CLI 集成（终端里跑 claude）
         ["session"] = { enabled = true },
         ["session_auto"] = { enabled = true },

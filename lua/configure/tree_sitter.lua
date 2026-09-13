@@ -10,6 +10,9 @@ plugin.core = {
     end,
 
     config = function() -- Specifies code to run after this plugin is loaded
+        -- 国内网络：GitHub 直连不通。默认的下载方式是 curl 拉 github.com 的 tarball，会卡死；
+        -- 改成 git clone，配合 ~/.gitconfig 里针对 parser 仓库的 url.insteadOf 走 ghproxy.net。
+        require("nvim-treesitter.install").prefer_git = true
         local rainbow = require("ts-rainbow")
         require("nvim-treesitter.configs").setup({
             rainbow = { -- for rainbow pair
@@ -51,7 +54,7 @@ plugin.core = {
                 "latex",
                 "lua",
                 "make",
-                "org",
+                -- "org",  -- nvim-treesitter 装不了 org（parser 由 orgmode 插件提供），留着会报 "Parser not available"
                 "perl",
                 "python",
                 "rust",

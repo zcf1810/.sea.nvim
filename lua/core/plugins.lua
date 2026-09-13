@@ -19,14 +19,14 @@ if vim.g.feature_groups["default"] == true then
         ["emacs_commandline"] = { enabled = true }, -- use emacs key binding in commondline
         ["auto_pairs"] = { enabled = true },        -- auto complete pairs
         ["bbye"] = { enabled = true },              -- when you close the buffer the window could be reserve
-        ["indent_line"] = { enabled = true },       -- display the indent line
+        ["indent_line"] = { enabled = false },       -- display the indent line
         ["better_fold"] = { enabled = false },      -- display better fold
         ["which_key"] = { enabled = true },         -- key binding suggestion
         ["asynctasks"] = { enabled = true },        -- key binding suggestion
         ["plenary"] = { enabled = true },           -- key binding suggestion
         ["mason"] = { enabled = true },             -- package auto install
         ["mason_install"] = { enabled = true },     -- package auto install
-        ["tree_sitter"] = { enabled = true },
+        ["tree_sitter"] = { enabled = true },       -- 语法高亮/折叠（parser 与语言列表见 lua/configure/tree_sitter.lua）
         ["quick_fix"] = { enabled = true },         -- better quickfix
         ["popup"] = { enabled = true },
         ["easyjump"] = { enabled = true },
@@ -70,6 +70,7 @@ end
 if vim.g.feature_groups["enhance"] == true then
     plugins_configure.plugins_groups["enhance"] = {
         ["chatgpt"] = { enabled = true },
+        ["claude_code"] = { enabled = true }, -- Claude Code CLI 集成（终端里跑 claude）
         ["session"] = { enabled = true },
         ["session_auto"] = { enabled = true },
         ["hlslens"] = { enabled = true },
@@ -80,7 +81,7 @@ if vim.g.feature_groups["enhance"] == true then
         ["ultra_fold"] = { enabled = true },
         ["speed_date"] = { enabled = true },
         ["translate"] = { enabled = true },
-        ["notify"] = { enabled = true },
+        ["notify"] = { enabled = false },
         ["noice"] = { enabled = false },
         ["formatter"] = { enabled = true },
         ["auto_select"] = { enabled = true },
@@ -195,7 +196,8 @@ plugins_configure.setup = function()
             -- log = { "-10" }, -- show the last 10 commits
             log = { "-8" }, -- show commits from the last 3 days
             timeout = 500,  -- kill processes that take more than 2 minutes
-            url_format = "https://github.com/%s.git",
+            -- 原来直连 github.com，被墙会卡死/中断（插件目录残缺就是这么来的）；走 gh-proxy
+            url_format = "https://gh-proxy.com/https://github.com/%s.git",
             -- lazy.nvim requires git >=2.19.0. If you really want to use lazy with an older version,
             -- then set the below to false. This should work, but is NOT supported and will
             -- increase downloads a lot.

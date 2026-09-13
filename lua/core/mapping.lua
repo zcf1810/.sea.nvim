@@ -773,10 +773,9 @@ elseif vim.fn.has("unix") == 1 then
 end
 
 global_mapping.setup = function()
-    vim.cmd([[
-        inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<tab>"
-        inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-    ]])
+    -- <Tab> / <S-Tab> 的补全列表选择交给 nvim-cmp（见 lua/configure/nvim_cmp.lua）。
+    -- 这里原本有两条 pumvisible() 的 inoremap 也在抢 <Tab>，和 cmp 的映射互相覆盖
+    -- （谁后注册谁生效，顺序是随机的）—— 已删除，免得 Tab 时而选补全、时而插缩进。
     if loaded_plugins.which_key then
         local wk = require("which-key")
         wk.register(mapping_prefix)

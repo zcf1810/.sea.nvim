@@ -157,6 +157,23 @@ plugin.core = {
                     behavior = cmp.ConfirmBehavior.Replace,
                     select = false,
                 }),
+                -- Tab / Shift-Tab 在补全列表里上下选择（Select 只高亮不插入，再按 <CR>/<C-y> 才确认）
+                -- 不在补全状态时 fallback = 原来的 Tab 行为（你的 expandtab=4 → 4 个空格）
+                -- 注：UltiSnips 的展开/跳转是 <C-j> / <C-k>，跟 Tab 不冲突
+                ["<Tab>"] = cmp.mapping(function(fallback)
+                    if cmp.visible() then
+                        cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+                    else
+                        fallback()
+                    end
+                end, { "i", "s" }),
+                ["<S-Tab>"] = cmp.mapping(function(fallback)
+                    if cmp.visible() then
+                        cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
+                    else
+                        fallback()
+                    end
+                end, { "i", "s" }),
             }),
             sources = cmp.config.sources({
                 { name = "jupynium", priority = 60 }, -- consider higher priority than LSP

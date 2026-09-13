@@ -15,7 +15,7 @@ M.setup = function()
     end
 
     local user_setting = {
-        python3_host_prog = vim.g.HOME_PATH .. "/miniconda3/bin/python3", -- add to your own python3 path
+        python3_host_prog = "/usr/bin/python3.8",  -- 原 anaconda3 已删（disk-cleanup），pynvim 在 ~/.local 里，换到系统 3.8 照样可用
         snips_author = "Sun Fu",
         snips_email = "cstsunfu@gmail.com",
         snips_github = "https://github.com/cstsunfu",

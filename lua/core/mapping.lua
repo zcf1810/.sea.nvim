@@ -676,6 +676,14 @@ global_mapping.register({
     short_desc = "5k",
 })
 
+-- 跳转返回：从 goto-definition / 搜索 / 标记跳转后回到上一个位置（等价 <C-o>，走 jumplist）
+global_mapping.register({
+    mode = "n",
+    key = { "<C-t>" },
+    action = "<C-o>",
+    short_desc = "Jump Back",
+})
+
 -- space
 global_mapping.register({
     mode = "n",

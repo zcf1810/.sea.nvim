@@ -221,7 +221,7 @@ plugin.mapping = function()
 
     mappings.register({
         mode = { "n" },
-        key = { "<C-t>" },
+        key = { "<A-t>" }, -- 原来是 <C-t>，<C-t> 改成了"跳转返回"
         action = ":lua _G._float_terminal_toggle()<cr>",
         silent = true,
         short_desc = "Float Terminal",

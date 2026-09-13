@@ -130,8 +130,10 @@ plugin.core = {
         if os.getenv("GRAMMARLY_PATH") == nil then
             servers["grammarly"] = nil
         end
+        -- 离线安装包模式：LSP server 已随包提供，别触发 mason 联网安装
+        local offline = require("core.offline").enabled()
         mason_lspconfig.setup({
-            ensure_installed = vim.tbl_keys(servers),
+            ensure_installed = offline and {} or vim.tbl_keys(servers),
         })
         for server_name, server_config in pairs(servers) do
             local common_config = {

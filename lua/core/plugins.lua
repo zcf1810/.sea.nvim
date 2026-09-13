@@ -190,7 +190,12 @@ plugins_configure.setup = function()
             end
         end
     end
+    -- 离线模式开关：离线安装包会在配置目录放一个 .offline 标记文件。
+    -- 有标记时 lazy 不联网（不 clone 缺失插件、不检查更新），没有标记时行为跟以前完全一样。
+    local offline = require("core.offline").enabled()
     require("lazy").setup(plugins, {
+        install = { missing = not offline },
+        checker = { enabled = not offline },
         git = {
             -- defaults for the `Lazy log` command
             -- log = { "-10" }, -- show the last 10 commits

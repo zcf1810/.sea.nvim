@@ -8,6 +8,8 @@ plugin.core = {
     end,
 
     config = function() -- Specifies code to run after this plugin is loaded
+        -- 离线安装包模式（配置目录下的 .offline 标记）：不联网做工具安装/更新检查
+        local offline = require("core.offline").enabled()
         -- Utilities for creating configurations
         require("mason-tool-installer").setup({
             -- a list of all tools you want to ensure are installed upon
@@ -29,7 +31,7 @@ plugin.core = {
 
             -- :MasonToolsUpdate to install tools and check for updates.
             -- Default: true
-            run_on_start = true,
+            run_on_start = not offline, -- 离线包里工具都在，不用每次启动检查
             -- e.g.: 5000 = 5 second delay, 10000 = 10 second delay, etc...
             -- Default: 0
             start_delay = 3000, -- 3 second delay

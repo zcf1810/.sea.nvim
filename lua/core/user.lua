@@ -14,8 +14,25 @@ M.setup = function()
         themes.setting(themes.configs.material_palenight)
     end
 
+    -- 自动挑一个装了 pynvim 的 python：原来写死 /usr/bin/python3.8，换台机器就废。
+    -- 本机有 3.8 就直接用（零额外开销），没有时才去探测别的 python
+    local function pick_python_host()
+        if vim.fn.executable("/usr/bin/python3.8") == 1 then
+            return "/usr/bin/python3.8"
+        end
+        for _, cand in ipairs({ "/usr/bin/python3", "/usr/local/bin/python3", vim.fn.exepath("python3") }) do
+            if cand ~= "" and vim.fn.executable(cand) == 1 then
+                vim.fn.system({ cand, "-c", "import pynvim" })
+                if vim.v.shell_error == 0 then
+                    return cand
+                end
+            end
+        end
+        return "python3"
+    end
+
     local user_setting = {
-        python3_host_prog = "/usr/bin/python3.8",  -- 原 anaconda3 已删（disk-cleanup），pynvim 在 ~/.local 里，换到系统 3.8 照样可用
+        python3_host_prog = pick_python_host(),
         snips_author = "Sun Fu",
         snips_email = "cstsunfu@gmail.com",
         snips_github = "https://github.com/cstsunfu",

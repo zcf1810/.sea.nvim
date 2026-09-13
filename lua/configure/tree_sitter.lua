@@ -59,7 +59,10 @@ plugin.core = {
                 "latex",
                 "lua",
                 "make",
-                -- "org",  -- nvim-treesitter 装不了 org（parser 由 orgmode 插件提供），留着会报 "Parser not available"
+                -- "org",  -- nvim-treesitter 装不了 org（列在这里会报 "Parser not available"）。
+                --   org 的 parser 已手动装好：从 nvim-orgmode/tree-sitter-org 克隆后
+                --   `tree-sitter generate && tree-sitter build --output ~/.local/share/nvim/site/parser/org.so`
+                --   （headlines.nvim / org 文件高亮都需要它，不装会报 "no parser for 'org' language"）
                 "perl",
                 "python",
                 "rust",

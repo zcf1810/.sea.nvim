@@ -280,9 +280,13 @@ plugin.core = {
         local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
         capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-        require("lspconfig")["gopls"].setup({
-            capabilities = capabilities,
-        })
+        -- 只在真装了 Go 工具链时才启 gopls：lspconfig 的 gopls 会调 `go env GOMOD` 算 root_dir，
+        -- 这台机器没装 go → 打开 .go 文件会报 `E475: Invalid value for argument cmd: 'go' is not executable`
+        if vim.fn.executable("go") == 1 and vim.fn.executable("gopls") == 1 then
+            require("lspconfig")["gopls"].setup({
+                capabilities = capabilities,
+            })
+        end
     end,
 }
 

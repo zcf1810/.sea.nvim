@@ -5,14 +5,13 @@ plugin.core = {
     event = "VeryLazy",
     dependencies = {
         "nvim-lspconfig",
-        --{
-        --    "quangnguyen30192/cmp-nvim-ultisnips",
-        --    enabled = vim.g.feature_groups.lsp == "builtin",
-        --    config = function()
-        --        -- optional call to setup (see customization section)
-        --        require("cmp_nvim_ultisnips").setup {}
-        --    end,
-        --}, -- ultisnips source
+        {
+            "quangnguyen30192/cmp-nvim-ultisnips",
+            enabled = vim.g.feature_groups.lsp == "builtin",
+            -- 故意不调 setup{}：它的 setup 用的是旧版 vim.validate 位置参数签名，
+            -- 在这个 nvim 上会报 `opt: expected table, got string`；
+            -- README 说只有要改默认行为时才需要 setup，默认值（show_snippets=expandable）够用
+        }, -- ultisnips source：让模板出现在补全菜单里（模板文件用 ;se 打开）
         {
             "hrsh7th/cmp-nvim-lsp",
             enabled = vim.g.feature_groups.lsp == "builtin",
@@ -179,7 +178,7 @@ plugin.core = {
                 { name = "jupynium", priority = 60 }, -- consider higher priority than LSP
                 { name = "copilot", priority = 200 },
                 { name = "nvim_lsp", priority = 100 },
-                --{ name = "ultisnips",               priority = 80 }, -- For ultisnips users.
+                { name = "ultisnips", priority = 80 }, -- 代码模板（UltiSnips）；之前被注释掉 → 菜单里看不到模板
                 { name = "calc", priority = 100 },
                 { name = "nvim_lsp_signature_help", priority = 100 },
                 { name = "path", priority = 100 },

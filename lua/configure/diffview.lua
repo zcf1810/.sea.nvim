@@ -39,21 +39,25 @@ plugin.core = {
             },
             file_history_panel = {
                 log_options = {
-                    single_file = {
-                        max_count = 256, -- Limit the number of commits
-                        follow = true, -- Follow renames (only for single file)
-                        all = false, -- Include all refs under 'refs/' including HEAD
-                        merges = false, -- List only merge commits
-                        no_merges = false, -- List no merge commits
-                        reverse = false, -- List commits in reverse order
-                    },
-                    multi_file = {
-                        max_count = 100, -- Limit the number of commits
-                        follow = false, -- Follow renames (only for single file)
-                        all = false, -- Include all refs under 'refs/' including HEAD
-                        merges = false, -- List only merge commits
-                        no_merges = false, -- List no merge commits
-                        reverse = false, -- List commits in reverse order
+                    -- changelog-271 起 log_options 必须按 VCS 分子表（这里只关心 git），
+                    -- 旧写法（single_file 直接挂在 log_options 下）会弹 deprecated 警告
+                    git = {
+                        single_file = {
+                            max_count = 256, -- Limit the number of commits
+                            follow = true, -- Follow renames (only for single file)
+                            all = false, -- Include all refs under 'refs/' including HEAD
+                            merges = false, -- List only merge commits
+                            no_merges = false, -- List no merge commits
+                            reverse = false, -- List commits in reverse order
+                        },
+                        multi_file = {
+                            max_count = 100, -- Limit the number of commits
+                            follow = false, -- Follow renames (only for single file)
+                            all = false, -- Include all refs under 'refs/' including HEAD
+                            merges = false, -- List only merge commits
+                            no_merges = false, -- List no merge commits
+                            reverse = false, -- List commits in reverse order
+                        },
                     },
                 },
                 win_config = {

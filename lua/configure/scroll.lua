@@ -21,18 +21,25 @@ plugin.core = {
             post_hook = nil, -- Function to run after the scrolling animation ends
         })
 
-        local t = {}
-        -- Syntax: t[keys] = {function, {function arguments}}
-        t["<C-u>"] = { "scroll", { "-vim.wo.scroll", "true", "100", "sine" } }
-        t["<C-d>"] = { "scroll", { "vim.wo.scroll", "true", "100", "quadratic" } }
-        t["<C-b>"] = { "scroll", { "-vim.api.nvim_win_get_height(0)", "true", "150" } }
-        t["<C-f>"] = { "scroll", { "vim.api.nvim_win_get_height(0)", "true", "150" } }
-        t["<C-y>"] = { "scroll", { "-0.10", "false", "30" } }
-        t["<C-e>"] = { "scroll", { "0.10", "false", "30" } }
-        t["zt"] = { "zt", { "50" } }
-        t["zz"] = { "zz", { "50" } }
-        t["zb"] = { "zb", { "50" } }
-        require("neoscroll.config").set_mappings(t)
+        -- 自定义滚动映射。老写法 require("neoscroll.config").set_mappings(t) 已废弃，
+        -- 每次启动会弹 "Neoscroll: set_mappings() is deprecated" 警告，改成直接调 helper 函数
+        -- （同时必须用 scroll(lines, opts) 的新签名，老的位置参数签名也会弹警告）
+        local neoscroll = require("neoscroll")
+        local keymap = {
+            ["<C-u>"] = function() neoscroll.scroll(-vim.wo.scroll, { move_cursor = true, duration = 100, easing = "sine" }) end,
+            ["<C-d>"] = function() neoscroll.scroll(vim.wo.scroll, { move_cursor = true, duration = 100, easing = "quadratic" }) end,
+            ["<C-b>"] = function() neoscroll.scroll(-vim.api.nvim_win_get_height(0), { move_cursor = true, duration = 150 }) end,
+            ["<C-f>"] = function() neoscroll.scroll(vim.api.nvim_win_get_height(0), { move_cursor = true, duration = 150 }) end,
+            ["<C-y>"] = function() neoscroll.scroll(-0.10, { move_cursor = false, duration = 30 }) end,
+            ["<C-e>"] = function() neoscroll.scroll(0.10, { move_cursor = false, duration = 30 }) end,
+            ["zt"] = function() neoscroll.zt({ half_win_duration = 50 }) end,
+            ["zz"] = function() neoscroll.zz({ half_win_duration = 50 }) end,
+            ["zb"] = function() neoscroll.zb({ half_win_duration = 50 }) end,
+        }
+        -- 和原来的 set_mappings 一样只映射 n / x 模式
+        for key, func in pairs(keymap) do
+            vim.keymap.set({ "n", "x" }, key, func, { silent = true, desc = "neoscroll " .. key })
+        end
     end,
 }
 

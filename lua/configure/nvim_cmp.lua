@@ -101,6 +101,28 @@ plugin.core = {
             autocmd FileType AerojumpFilter lua require('cmp').setup.buffer { enabled = false }
         ]])
         vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
+        -- 补全高亮：default=true 表示主题若已定义则不覆盖
+        --   CmpGhostText          光标后"即将补上"的灰色虚影
+        --   CmpItemAbbrMatch      候选里跟你输入匹配上的字符（一眼看出为何匹配）
+        --   CmpItemAbbrMatchFuzzy 模糊匹配命中的字符
+        --   CmpItemMenu           每行右边的来源标签（[LSP]/[Snip]/[Buf]…）
+        local cmp_hl = {
+            CmpGhostText = { link = "Comment" },
+            CmpItemAbbrMatch = { link = "Special" },
+            CmpItemAbbrMatchFuzzy = { link = "Special" },
+            CmpItemMenu = { link = "Comment" },
+        }
+        for name, spec in pairs(cmp_hl) do
+            vim.api.nvim_set_hl(0, name, vim.tbl_extend("force", spec, { default = true }))
+        end
+        -- 换主题后主题可能重置这些组，重新套一遍
+        vim.api.nvim_create_autocmd("ColorScheme", {
+            callback = function()
+                for name, spec in pairs(cmp_hl) do
+                    vim.api.nvim_set_hl(0, name, vim.tbl_extend("force", spec, { default = true }))
+                end
+            end,
+        })
         --highlight CompDocBorder guifg=# guibg=#None
         --autocmd! ColorScheme * highlight CompDocBorder guifg=#ffaa55 guibg=None
         --local cmp_ultisnips_mappings = require("cmp_nvim_ultisnips.mappings")
@@ -188,10 +210,14 @@ plugin.core = {
             sorting = {
                 priority_weight = 1.0,
                 comparators = {
-                    compare.score, -- Jupyter kernel completion shows prior to LSP
+                    compare.score, -- 匹配得分（Jupyter kernel 候选排 LSP 前）
+                    compare.exact, -- 完全匹配的排最前
                     compare.recently_used,
                     compare.locality,
-                    -- ...
+                    compare.kind,      -- 同分时按类型（snippet/keyword 之类优先）
+                    compare.sort_text, -- 尊重 LSP 给的 sortText（服务端认为最合适的排前）
+                    compare.length,    -- 短的优先（输入 while 时 while 排在 while_loop 前）
+                    compare.order,
                 },
             },
             formatting = {
@@ -220,7 +246,12 @@ plugin.core = {
             enabled = function()
                 return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt" or require("cmp_dap").is_dap_buffer()
             end,
-            preselect = true,
+            -- 「显示最优的补全」：自动高亮选中排序最靠前的候选（但不插入，按 <CR>/<C-y> 才确认）
+            preselect = cmp.PreselectMode.Item,
+            -- 补全窗口行为：有候选就弹、只有一条也弹、不自动插入
+            completion = { completeopt = "menu,menuone,noselect" },
+            -- 「把需要补全的内容灰化」：在光标后用灰色虚影(ghost text)显示即将补上的那部分
+            experimental = { ghost_text = { hl_group = "CmpGhostText" } },
         })
 
         -- Set configuration for specific filetype.

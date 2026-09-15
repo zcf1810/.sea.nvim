@@ -160,6 +160,8 @@ end
 if vim.g.feature_groups["file_and_view"] == true then
     plugins_configure.plugins_groups["file_and_view"] = {
         ["telescope"] = { enabled = true },
+        ["harpoon"] = { enabled = true }, -- 常驻文件快速跳转（;i 菜单 / ;I 钉住 / ;1~4 跳）
+        ["oil"] = { enabled = true },     -- 目录当缓冲区直接编辑（- 打开）
         ["ctrlsf"] = { enabled = true },                                        -- search the same token under cursor
         ["spectre"] = { enabled = true },                                       -- search the and replace token by reg exp
         ["vista"] = { enabled = vim.g.feature_groups.lsp == "coc" },            -- only works for coc lsp, tree view

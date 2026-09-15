@@ -197,7 +197,10 @@ plugins_configure.setup = function()
     local offline = require("core.offline").enabled()
     require("lazy").setup(plugins, {
         install = { missing = not offline },
-        checker = { enabled = not offline },
+        -- 更新检查：lazy 默认是关的。之前写成 `not offline` 等于"在线就每次启动都查更新"，
+        -- 结果每次开 nvim 都弹「# Plugin Updates」插件清单（还要按回车），已改回默认关闭。
+        -- 想查更新手动执行 :Lazy check 或 :Lazy update
+        checker = { enabled = false },
         git = {
             -- defaults for the `Lazy log` command
             -- log = { "-10" }, -- show the last 10 commits

@@ -5,7 +5,7 @@ plugin.core = {
     event = "VeryLazy",
     dependencies = {
         { "neovim/nvim-lspconfig", enabled = vim.g.feature_groups.lsp == "builtin" },
-        { "jose-elias-alvarez/null-ls.nvim", enabled = vim.g.feature_groups.lsp == "builtin" },
+        { "nvimtools/none-ls.nvim", enabled = vim.g.feature_groups.lsp == "builtin" },
     },
     init = function() -- Specifies code to run before this plugin is loaded.
     end,

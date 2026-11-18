@@ -165,21 +165,11 @@ for key, value in pairs(default_setting["global"]) do
     vim.g[key] = value
 end
 
-vim.api.nvim_create_augroup("autochdir", { clear = true })
-vim.api.nvim_create_autocmd({ "BufWinEnter", "BufWritePre" }, {
-    group = "autochdir",
-    pattern = "?*",
-    callback = function()
-        if
-            not vim.bo.modifiable
-            or vim.tbl_contains(no_number_filetypes_list, vim.bo.filetype)
-            or not (vim.fn.expand("%:p"):find("^/"))
-        then
-            return
-        end
-        vim.fn.execute("cd " .. vim.fn.expand("%:p:h"))
-    end,
-})
+-- cwd 固定为启动 nvim 时的目录。
+-- 这里原本有一条 BufWinEnter/BufWritePre 的 `cd %:p:h`，等价于 autochdir，
+-- 会导致用 telescope/fzf 选文件后 cwd 被改到该文件目录，
+-- 再打开 NvimTree 就变成"当前文件的目录树"。按需保留在 LAUNCH_CWD 里。
+vim.g.LAUNCH_CWD = vim.g.LAUNCH_CWD or vim.fn.getcwd()
 
 vim.api.nvim_create_augroup("buf_large", { clear = true })
 vim.api.nvim_create_autocmd({ "BufReadPre", "FileReadPre" }, {

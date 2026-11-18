@@ -73,6 +73,13 @@ plugin.core = {
                 --side = "right",
                 signcolumn = "yes",
             },
+            -- 不要让树跟着当前 buffer / cwd 跑，根目录始终是启动 nvim 的目录
+            update_focused_file = {
+                enable = false,
+                update_root = false,
+            },
+            update_cwd = false,
+            sync_root_with_cwd = false,
             filters = {
                 dotfiles = false,
                 custom = { "$XDG_DATA_HOME", "__pycache__" },
